@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "TV Pro",
+        "price": 45000,
+        "quantity": 2,
+        "is_available": true
+    },
+    {
+        "id": 3,
+        "name": "Mouse",
+        "price": 1500,
+        "quantity": 0,
+        "is_available": false
+    },
+    {
+        "id": 4,
+        "name": "Keyboard",
+        "price": 3500,
+        "quantity": 4,
+        "is_available": true
+    }
+]
