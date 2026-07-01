@@ -8,16 +8,23 @@
     },
     {
         "id": 3,
-        "name": "Mouse",
-        "price": 1500,
-        "quantity": 0,
-        "is_available": false
+        "name": "MouseProTop",
+        "price": 1900.0,
+        "quantity": 3,
+        "is_available": true
     },
     {
         "id": 4,
         "name": "Keyboard",
         "price": 3500,
         "quantity": 4,
+        "is_available": true
+    },
+    {
+        "id": 5,
+        "name": "MousePro",
+        "price": 9000.0,
+        "quantity": 70,
         "is_available": true
     }
 ]
