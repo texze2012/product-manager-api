@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+from dbm import error
+from http.client import HTTPException
+
+from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 
 from app.services import ProductService
@@ -20,6 +23,24 @@ class ProductUpdateRequest(BaseModel):
     name: str
     price: float
     quantity: int
+
+
+def handle_response(response):
+    if response["success"]:
+        return response
+
+    error = response["error"]
+
+    if error == "Товар не найден":
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=error
+        )
+
+    raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail=error
+    )
 @app.get("/")
 def root():
     return {
@@ -36,25 +57,31 @@ def get_available_products():
 
 @app.get("/products/{product_id}")
 def get_product(product_id: int):
-    return service.get_product_response(product_id)
+    response = service.get_product_response(product_id)
+    return handle_response(response)
 
-@app.post("/products")
+@app.post("/products", status_code=status.HTTP_201_CREATED)
 def create_product(product: ProductCreateRequest):
-    return service.create_product(
+    response = service.create_product(
         product.name,
         product.price,
-        product.quantity,
+        product.quantity
     )
+
+    return handle_response(response)
 
 @app.put("/products/{product_id}")
 def update_product(product_id: int, product: ProductUpdateRequest):
-    return service.update_product(
+    response = service.update_product(
         product_id,
         product.name,
         product.price,
         product.quantity
     )
 
+    return handle_response(response)
+
 @app.delete("/products/{product_id}")
 def delete_product(product_id: int):
-    return service.delete_product(product_id)
+    response = service.delete_product(product_id)
+    return handle_response(response)
