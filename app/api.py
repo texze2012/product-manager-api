@@ -2,8 +2,7 @@ from dbm import error
 from http.client import HTTPException
 
 from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseModel
-
+from app.schemas import ProductCreateRequest, ProductUpdateRequest
 from app.services import ProductService
 
 app = FastAPI(
@@ -13,17 +12,6 @@ app = FastAPI(
 )
 
 service = ProductService()
-
-class ProductCreateRequest(BaseModel):
-    name: str
-    price: float
-    quantity: int
-
-class ProductUpdateRequest(BaseModel):
-    name: str
-    price: float
-    quantity: int
-
 
 def handle_response(response):
     if response["success"]:
